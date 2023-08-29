@@ -1,0 +1,9 @@
+{
+  "recommendations": [
+    "mcright.auto-save",
+    "esbenp.prettier-vscode",
+    "dbaeumer.vscode-eslint",
+    "stylelint.vscode-stylelint",
+    "bradlc.vscode-tailwindcss"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "New Component": {
+    "prefix": ["newComponent"],
+    "body": [
+      "type Props = {}",
+      "",
+      "const ${1:name}= ({}: Props) => {",
+      " return <></>;",
+      "};",
+      "",
+      "export default ${1:name};"
+    ]
+  }
+}
