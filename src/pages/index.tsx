@@ -1,20 +1,24 @@
 import Hero from "@/components/Hero";
-import TextSection from "@/components/TextSection";
-import { GetStaticProps } from "next";
+import Section from "@/components/Section";
+import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
 
 type Props = {};
 
-const Home = () => {
+const Home = (_props: InferGetStaticPropsType<typeof getStaticProps>) => {
   const { t } = useTranslation("common");
 
   return (
     <>
-      <Hero />
-      <TextSection>
+      <Hero
+        imageUrl="/assets/img/example.jpeg"
+        title={t("julia-david")}
+        subTitle={t("date")}
+      />
+      <Section>
         <p>{t("home-text")}</p>
-      </TextSection>
+      </Section>
     </>
   );
 };

@@ -5,5 +5,15 @@
   "rsvp": "OSA",
   "julia-david": "Julia & David",
   "date": "14-16 Juni 2024",
-  "home-text": "Enda sen de gamla grekerna, så har Julia och David varit tillsammans. Eller så känns det åtminstone"
+  "home-text": "Enda sen de gamla grekerna, så har Julia och David varit tillsammans. Eller så känns det åtminstone",
+  "register": "Anmälan till bröllopet",
+  "register-text": "Bröllopet kommer att pågå mellan 14-16 juni. Vi vill ha med er hela helgen, men man kan även komma på lördagen. För att vi ska planera så vill vi att ni fyller i de dagar ni tänker närvara.",
+  "register-success": "Great success!",
+  "register-success-text": "Vad kul att ni vill komma på vårt bröllop. Ses i juni!",
+  "send": "Skicka",
+  "name": "Name",
+  "diet-preferences": "Kostpreferenser",
+  "fri-sun": "Fredag-Söndag",
+  "sat-sun": "Lördag-Söndag",
+  "sat": "Lördag"
 }
