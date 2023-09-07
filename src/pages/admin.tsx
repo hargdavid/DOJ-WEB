@@ -1,5 +1,5 @@
 import AdminSection from "@/components/AdminSection";
-import Title from "@/components/Title";
+import Title from "@/components/Content/Title";
 import { GetStaticProps, InferGetStaticPropsType } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 

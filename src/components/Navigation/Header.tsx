@@ -1,24 +1,16 @@
 import Link from "next/link";
-import { useTranslation } from "next-i18next";
-import LinkButton from "../LinkButton";
 import Image from "next/image";
-import { useGlobalState } from "@/hooks/GlobalProvider";
 import MobileMenu from "../MobileMenu";
+import Links from "./Links";
+import { NavigationItem } from "@/types/content/navigation";
 
-const Header = () => {
-  const { t } = useTranslation("common");
-  const { isDesktop, isTop } = useGlobalState();
+type Props = {
+  isDesktop: boolean;
+  isTop: boolean;
+  navigation: NavigationItem[];
+};
 
-  const Links = () => {
-    return (
-      <>
-        <Link href="/content/when-where">{t("when-where")}</Link>
-        <Link href="/content/event-details">{t("event-details")}</Link>
-        <LinkButton href="/register" title={t("rsvp")} />
-      </>
-    );
-  };
-
+const Header = ({ isDesktop, isTop, navigation }: Props) => {
   return (
     <header
       className={`items-start md:items-center py-6 px-8 fixed w-full z-10 flex justify-between ease-in-out duration-200 ${
@@ -36,11 +28,11 @@ const Header = () => {
       </Link>
       {isDesktop ? (
         <nav className="flex justify-between items-center gap-4">
-          <Links />
+          <Links navigation={navigation} />
         </nav>
       ) : (
         <MobileMenu>
-          <Links />
+          <Links navigation={navigation} />
         </MobileMenu>
       )}
     </header>

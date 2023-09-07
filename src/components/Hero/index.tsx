@@ -1,21 +1,29 @@
 import Image from "next/image";
 import LinkButton from "../LinkButton";
-import Title from "../Title";
+import Title from "../Content/Title";
 
 type Props = {
   imageUrl: string;
   title: string;
+  alt: string;
   subTitle?: string;
   buttonText?: string;
   buttonLink?: string;
 };
 
-const Hero = ({ imageUrl, title, subTitle, buttonText, buttonLink }: Props) => {
+const Hero = ({
+  imageUrl,
+  title,
+  subTitle,
+  buttonText,
+  buttonLink,
+  alt,
+}: Props) => {
   return (
     <section className="w-full pb-[120%] md:pb-[40%] relative overflow-hidden">
       <div className="absolute w-full h-full">
         <Image
-          alt="background"
+          alt={alt}
           src={imageUrl}
           className="max-w-none h-full relative md:h-auto md:w-full"
           height={500}
@@ -23,8 +31,8 @@ const Hero = ({ imageUrl, title, subTitle, buttonText, buttonLink }: Props) => {
         />
         <div className="w-full object-fit bg-black bg-opacity-10 h-full absolute top-0" />
         <div className="top-[50%] absolute translate-y-[-50%] w-full px-8 text-center">
-          {subTitle && <h2 className="text-2xl pb-4">{subTitle}</h2>}
           <Title title={title} />
+          {subTitle && <h2 className="text-2xl pb-4">{subTitle}</h2>}
           {buttonText && buttonLink && (
             <LinkButton title={buttonText} href={buttonLink} />
           )}

@@ -1,20 +1,29 @@
+import ContentApi from "@/api/content/page";
 import Hero from "@/components/Hero";
 import Section from "@/components/Section";
-import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { StartPage } from "@/types/content/startPage";
 import { useTranslation } from "next-i18next";
+import { useEffect, useState } from "react";
 
-type Props = {};
-
-const Home = (_props: InferGetStaticPropsType<typeof getStaticProps>) => {
+const Home = () => {
   const { t } = useTranslation("common");
+  const [content, setContent] = useState<StartPage>({
+    title: "",
+    subTitle: "",
+  });
+
+  useEffect(() => {
+    (async () => {
+      setContent(await ContentApi.getStartPage());
+    })();
+  }, []);
 
   return (
     <>
       <Hero
         imageUrl="/assets/img/example.jpeg"
-        title={t("julia-david")}
-        subTitle={t("date")}
+        title={content.title}
+        subTitle={content.subTitle}
       />
       <Section>
         <p>{t("home-text")}</p>
@@ -22,11 +31,5 @@ const Home = (_props: InferGetStaticPropsType<typeof getStaticProps>) => {
     </>
   );
 };
-
-export const getStaticProps: GetStaticProps<Props> = async ({ locale }) => ({
-  props: {
-    ...(await serverSideTranslations(locale ?? "sv", ["common"])),
-  },
-});
 
 export default Home;

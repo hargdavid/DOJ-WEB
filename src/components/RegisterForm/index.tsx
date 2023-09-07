@@ -6,7 +6,6 @@ import CheckBox from "./Input/Checkbox";
 import RadioButton from "./Input/RadioButton";
 import { isEmpty } from "@/helpers/isEmpty";
 import { AttendingDays, RegisterForm } from "@/types/registerForm";
-import { RegisterApi } from "@/api/form/register";
 
 type Props = { setSuccess: (success: boolean) => void };
 
@@ -43,7 +42,6 @@ const RegisterForm = ({ setSuccess }: Props) => {
 
     Object.values(registerForm).some((formValue) => {
       if (formValue.required && isEmpty(formValue.value)) {
-        console.log("hit", formValue);
         canSave = false;
       }
     });

@@ -1,25 +1,24 @@
-import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import ContentApi from "@/api/content/page";
+import { usePathname } from "next/navigation";
+import { ContentPage } from "@/types/content/contentPage";
+import ContentProvider from "@/components/Content/ContentProvider";
 
-type Props = {};
+const ContentPage = () => {
+  const [contentPage, setContentPage] = useState<ContentPage>(); //TODO change this
+  const pathname = usePathname();
 
-const ContentPage = (
-  _props: InferGetStaticPropsType<typeof getStaticProps>
-) => {
-  const [content, setContent] = useState<boolean>(false); //TODO change this
+  useEffect(() => {
+    (async () => {
+      if (pathname) {
+        setContentPage(
+          await ContentApi.getContentPage(pathname?.replace("/content/", ""))
+        );
+      }
+    })();
+  }, [pathname]);
 
-  return <section>THis is a contentpage</section>;
+  return <>{contentPage && <ContentProvider contentPage={contentPage} />}</>;
 };
-
-export const getStaticPaths: GetStaticPaths = async () => {
-  return { paths: [], fallback: false };
-};
-
-export const getStaticProps: GetStaticProps<Props> = async ({ locale }) => ({
-  props: {
-    ...(await serverSideTranslations(locale ?? "sv", ["common"])),
-  },
-});
 
 export default ContentPage;

@@ -1,16 +1,16 @@
 import { useTranslation } from "next-i18next";
-import Link from "next/link";
-import LinkButton from "../LinkButton";
+import { NavigationItem } from "@/types/content/navigation";
+import Links from "./Links";
 
-const Footer = () => {
-  const { t } = useTranslation("common");
+type Props = {
+  navigation: NavigationItem[];
+};
 
+const Footer = ({ navigation }: Props) => {
   return (
     <footer className="w-full px-8 py-8 bg-brown">
       <nav className="flex flex-col items-start gap-4 w-max">
-        <Link href="/when-where">{t("when-where")}</Link>
-        <Link href="/event-details">{t("event-details")}</Link>
-        <LinkButton href="/register" title={t("rsvp")} />
+        <Links navigation={navigation} />
       </nav>
 
       <p className="pt-6 font-thin text-xs">
