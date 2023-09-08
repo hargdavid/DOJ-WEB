@@ -4,9 +4,19 @@
 */
 export const imageAssetToPath = (rawString: string): string => {
   const cdnBasePath = process.env.NEXT_PUBLIC_CDN_PATH;
-  const formattedString = rawString
-    .replace("image-", "")
-    .replace("-jpg", ".jpg");
+  const type = rawString.indexOf("-jpg") === -1 ? ImageType.PNG : ImageType.JPG;
+  let formattedString = rawString.replace("image-", "");
+
+  if (type === ImageType.JPG) {
+    formattedString = formattedString.replace("-jpg", ".jpg");
+  } else {
+    formattedString = formattedString.replace("-png", ".png");
+  }
 
   return cdnBasePath + formattedString;
 };
+
+enum ImageType {
+  JPG,
+  PNG,
+}

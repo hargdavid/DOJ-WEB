@@ -3,14 +3,16 @@ import Image from "next/image";
 import MobileMenu from "../MobileMenu";
 import Links from "./Links";
 import { NavigationItem } from "@/types/content/navigation";
+import { Image as ImageType } from "@/types/content/contentPage";
 
 type Props = {
   isDesktop: boolean;
   isTop: boolean;
   navigation: NavigationItem[];
+  logo?: ImageType;
 };
 
-const Header = ({ isDesktop, isTop, navigation }: Props) => {
+const Header = ({ isDesktop, isTop, navigation, logo }: Props) => {
   return (
     <header
       className={`items-start md:items-center py-6 px-8 fixed w-full z-10 flex justify-between ease-in-out duration-200 ${
@@ -18,13 +20,15 @@ const Header = ({ isDesktop, isTop, navigation }: Props) => {
       }`}
     >
       <Link href="/">
-        <Image
-          src="/assets/img/logo.png"
-          alt="logo julia david"
-          width={528}
-          height={287}
-          className="w-36 md:w-48"
-        />
+        {logo && (
+          <Image
+            src={logo?.url}
+            alt={logo?.alt}
+            width={528}
+            height={287}
+            className="w-36 md:w-48"
+          />
+        )}
       </Link>
       {isDesktop ? (
         <nav className="flex justify-between items-center gap-4">

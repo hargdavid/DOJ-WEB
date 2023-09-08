@@ -12,6 +12,7 @@ import {
   TextTypes,
 } from "@/types/content/contentPage";
 import { imageAssetToPath } from "../imageAssetToPath";
+import { mapImageBlock } from "./mapImageBlock";
 
 export const mapContentPage = (contentPageDTO: ContentPageDTO): ContentPage => {
   return {
@@ -38,12 +39,6 @@ const mapTextBlock = (textBlockDto: TextBlockDto): TextBlock => {
     };
   }
 };
-
-const mapImageBlock = (imageDto: ImageDto): Image => ({
-  alt: imageDto.alt,
-  url: imageAssetToPath(imageDto.asset._ref),
-  type: ContentBlockType.Image,
-});
 
 const mapContentBlock = (contentBlockDTO: ContentBlockDTO): ContentBlock => {
   switch (contentBlockDTO._type) {

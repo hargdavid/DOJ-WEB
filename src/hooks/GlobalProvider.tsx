@@ -1,17 +1,19 @@
 import ContentApi from "@/api/content/page";
-import { NavigationItem } from "@/types/content/navigation";
+import { MetaData, NavigationItem } from "@/types/content/navigation";
 import { createContext, useContext, useEffect, useState } from "react";
 
 type GlobalState = {
   isDesktop: boolean;
   isTop: boolean;
   navigation: NavigationItem[];
+  meta: MetaData | undefined;
 };
 
 const GlobalStateContext = createContext<GlobalState>({
   isDesktop: false,
   isTop: true,
   navigation: [],
+  meta: undefined,
 });
 
 export const GlobalStateProvider = ({
@@ -22,6 +24,7 @@ export const GlobalStateProvider = ({
   const [isDesktop, setIsDesktop] = useState<boolean>(false);
   const [isTop, setIsTop] = useState<boolean>(true);
   const [navigation, setNavigation] = useState<NavigationItem[]>([]);
+  const [meta, setMeta] = useState<MetaData>();
 
   const isDesktopSize = (screenSize: number) => {
     return setIsDesktop(screenSize > 768);
@@ -49,18 +52,20 @@ export const GlobalStateProvider = ({
 
   useEffect(() => {
     (async () => {
-      setNavigation(await ContentApi.getNavigation());
+      const { navigation, meta } = await ContentApi.getNavigation();
+      setNavigation(navigation);
+      setMeta(meta);
     })();
   }, []);
 
   return (
-    <GlobalStateContext.Provider value={{ isDesktop, isTop, navigation }}>
+    <GlobalStateContext.Provider value={{ isDesktop, isTop, navigation, meta }}>
       {children}
     </GlobalStateContext.Provider>
   );
 };
 
 export const useGlobalState = () => {
-  const { isDesktop, isTop, navigation } = useContext(GlobalStateContext);
-  return { isDesktop, isTop, navigation };
+  const { isDesktop, isTop, navigation, meta } = useContext(GlobalStateContext);
+  return { isDesktop, isTop, navigation, meta };
 };

@@ -1,3 +1,5 @@
+import { Image, ImageDto } from "./contentPage";
+
 export type NavigationItem = {
   name: string;
   path: string;
@@ -10,4 +12,39 @@ export type NavigationDto = {
   _key: string;
   title: string;
   isButton: boolean;
+  meta: MetaData;
+};
+
+export type MetaData = {
+  description: string;
+  favicon: Favicon;
+  keywords: string;
+  logo: Image;
+  title: string;
+};
+
+export type Favicon = {
+  androidBig: Image;
+  androidSmall: Image;
+  apple: Image;
+  faviconBig: Image;
+  faviconSmall: Image;
+};
+
+export type MetaDataDto = {
+  description: string;
+  favicon: FaviconDto;
+  keywords: string;
+  logo: ImageDto;
+  title: string;
+  _type: string;
+};
+
+export type FaviconDto = {
+  androidBig: ImageDto;
+  androidSmall: ImageDto;
+  apple: ImageDto;
+  faviconBig: ImageDto;
+  faviconSmall: ImageDto;
+  _type: string;
 };
