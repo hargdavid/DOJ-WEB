@@ -8,17 +8,27 @@
 }
 
 @font-face {
+  font-family: "Minerva-bold";
+  src: url("/assets/fonts/MinervaModern Bold.woff") format("woff");
+}
+
+@font-face {
   font-family: "Minerva-italic";
   src: url("/assets/fonts/MinervaModern Italic.woff") format("woff");
 }
 
 @layer base {
   body {
-    font-family: "Minerva";
-    font-weight: "400";
+    font-family: "Minerva-bold";
     @apply bg-lime text-black;
   }
   h1 {
+    font-family: "Minerva-italic";
+  }
+  .bold {
+    font-family: "Minerva";
+  }
+  .italic {
     font-family: "Minerva-italic";
   }
 }

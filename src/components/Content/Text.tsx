@@ -5,8 +5,16 @@ type Props = {
   type: MarkTypes | undefined;
 };
 
-const Text = ({ text }: Props) => {
-  return <p>{text}</p>;
+const Text = ({ text, type }: Props) => {
+  return (
+    <p
+      className={`${type === MarkTypes.Bold && "bold"} ${
+        type === MarkTypes.Italic && "italic"
+      } ${type === MarkTypes.Underline && "underline"}`}
+    >
+      {text}
+    </p>
+  );
 };
 
 export default Text;

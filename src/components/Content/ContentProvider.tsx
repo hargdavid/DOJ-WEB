@@ -9,7 +9,6 @@ import Heading3 from "./Heading3";
 import Text from "./Text";
 import Quote from "./Quote";
 import Bullet from "./Bullet";
-import Image from "next/image";
 import CustomImage from "./Image";
 import Section from "../Section";
 import Hero from "../Hero";
