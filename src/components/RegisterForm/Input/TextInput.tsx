@@ -3,9 +3,16 @@ type Props = {
   value: string;
   onChange: (val: string) => void;
   className?: string;
+  name: string;
 };
 
-const TextInput = ({ placeholder, value, onChange, className }: Props) => {
+const TextInput = ({
+  placeholder,
+  value,
+  onChange,
+  className,
+  name,
+}: Props) => {
   return (
     <input
       className={`px-6 py-4 outline-dark-green ${className}`}
@@ -13,6 +20,8 @@ const TextInput = ({ placeholder, value, onChange, className }: Props) => {
       placeholder={placeholder}
       value={value}
       onChange={(e) => onChange(e.target.value)}
+      name={name}
+      id={name}
     />
   );
 };

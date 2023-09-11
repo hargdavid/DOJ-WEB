@@ -2,28 +2,37 @@ import RegisterForm from "@/components/RegisterForm";
 import { GetStaticProps, InferGetStaticPropsType } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
-import Section from "@/components/Section";
-import Hero from "@/components/Hero";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SuccessSection from "@/components/SuccessSection";
+import { ContentPage } from "@/types/content/contentPage";
+import ContentApi from "@/api/content/page";
+import ContentProvider from "@/components/Content/ContentProvider";
+import { RegisterFormProvider } from "@/hooks/RegisterProvider";
 
 type Props = {};
 
 const Register = (_props: InferGetStaticPropsType<typeof getStaticProps>) => {
   const { t } = useTranslation("common");
   const [success, setSuccess] = useState<boolean>(false);
+  const [content, setContent] = useState<ContentPage>();
+
+  useEffect(() => {
+    (async () => {
+      setContent(await ContentApi.getRegisterPage());
+    })();
+  }, []);
 
   return (
-    <section>
-      <Hero
-        imageUrl="/assets/img/hero-example.jpeg"
-        title={success ? t("register-success") : t("register")}
-      />
-      <Section>
-        <p>{success ? t("register-success-text") : t("register-text")}</p>
-      </Section>
-      {success ? <SuccessSection /> : <RegisterForm setSuccess={setSuccess} />}
-    </section>
+    <RegisterFormProvider>
+      <section>
+        {content && <ContentProvider contentPage={content} />}
+        {success ? (
+          <SuccessSection />
+        ) : (
+          <RegisterForm setSuccess={setSuccess} />
+        )}
+      </section>
+    </RegisterFormProvider>
   );
 };
 

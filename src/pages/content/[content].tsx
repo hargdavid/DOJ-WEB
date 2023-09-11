@@ -8,6 +8,8 @@ const ContentPage = () => {
   const [contentPage, setContentPage] = useState<ContentPage>(); //TODO change this
   const pathname = usePathname();
 
+  console.log(contentPage);
+
   useEffect(() => {
     (async () => {
       if (pathname) {

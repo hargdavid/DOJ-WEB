@@ -1,16 +1,10 @@
 import ContentApi from "@/api/content/page";
-import Hero from "@/components/Hero";
-import Section from "@/components/Section";
-import { StartPage } from "@/types/content/startPage";
-import { useTranslation } from "next-i18next";
+import ContentProvider from "@/components/Content/ContentProvider";
+import { ContentPage } from "@/types/content/contentPage";
 import { useEffect, useState } from "react";
 
 const Home = () => {
-  const { t } = useTranslation("common");
-  const [content, setContent] = useState<StartPage>({
-    title: "",
-    subTitle: "",
-  });
+  const [content, setContent] = useState<ContentPage>();
 
   useEffect(() => {
     (async () => {
@@ -18,18 +12,7 @@ const Home = () => {
     })();
   }, []);
 
-  return (
-    <>
-      <Hero
-        imageUrl="/assets/img/example.jpeg"
-        title={content.title}
-        subTitle={content.subTitle}
-      />
-      <Section>
-        <p>{t("home-text")}</p>
-      </Section>
-    </>
-  );
+  return <>{content && <ContentProvider contentPage={content} />}</>;
 };
 
 export default Home;

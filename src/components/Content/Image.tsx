@@ -10,7 +10,7 @@ const CustomImage = ({ url, alt }: Props) => {
     <Image
       src={url}
       alt={alt}
-      className="w-full md:w-1/2 h-auto"
+      className="w-full h-auto"
       width={500}
       height={300}
     />

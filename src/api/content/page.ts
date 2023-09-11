@@ -1,13 +1,12 @@
 import { mapContentPage } from "@/helpers/mappers/mapContentPage";
 import { mapMetaData } from "@/helpers/mappers/mapMetaData";
 import { mapNavigation } from "@/helpers/mappers/mapNavigation";
-import { mapStartPage } from "@/helpers/mappers/mapStartPage";
+import { ContentPageDTO } from "@/types/content/contentPage";
 import {
   MetaData,
   NavigationDto,
   NavigationItem,
 } from "@/types/content/navigation";
-import { StartPageDto } from "@/types/content/startPage";
 import axios from "axios";
 
 export default class ContentApi {
@@ -32,8 +31,14 @@ export default class ContentApi {
     try {
       const query = encodeURIComponent("*[_type == 'startPage']");
       const response = await axios.get(this.contentUrl + query);
-      const startPage: StartPageDto = response.data.result[0];
-      return mapStartPage(startPage);
+
+      const startPage: ContentPageDTO = response.data.result[0];
+
+      if (typeof startPage === "undefined") {
+        throw { message: "Couldn't find content", code: 404 };
+      }
+
+      return mapContentPage(startPage);
     } catch (error) {
       throw error;
     }
@@ -45,6 +50,29 @@ export default class ContentApi {
         `*[_type == 'contentPage'][path == '${pathname}']`
       );
       const response = await axios.get(this.contentUrl + query);
+      const content = response.data.result[0] as ContentPageDTO;
+
+      if (typeof content === "undefined") {
+        throw { message: "Couldn't find content", code: 404 };
+      }
+
+      return mapContentPage(content);
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  public static getRegisterPage = async () => {
+    try {
+      const query = encodeURIComponent(
+        `*[_type == 'contentPage'][path == 'register']`
+      );
+      const response = await axios.get(this.contentUrl + query);
+      const content = response.data.result[0] as ContentPageDTO;
+
+      if (typeof content === "undefined") {
+        throw { message: "Couldn't find content", code: 404 };
+      }
       return mapContentPage(response.data.result[0]);
     } catch (error) {
       throw error;

@@ -11,7 +11,7 @@ const Links = ({ navigation }: Props) => {
         navEl.isButton ? (
           <LinkButton key={key} href={navEl.path} title={navEl.name} />
         ) : (
-          <Link key={key} href={navEl.path}>
+          <Link className="hover:underline" key={key} href={navEl.path}>
             {navEl.name}
           </Link>
         )

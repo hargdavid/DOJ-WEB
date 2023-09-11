@@ -12,13 +12,15 @@ import Bullet from "./Bullet";
 import CustomImage from "./Image";
 import Section from "../Section";
 import Hero from "../Hero";
+import Link from "./Link";
+import ImageList from "./ImageList";
 
 type Props = {
   contentPage: ContentPage;
 };
 
 const ContentProvider = ({ contentPage }: Props) => {
-  const { title, subtitle, content, heroImage } = contentPage;
+  const { title, subtitle, content, heroImage, button } = contentPage;
 
   return (
     <>
@@ -27,6 +29,7 @@ const ContentProvider = ({ contentPage }: Props) => {
         title={title}
         imageUrl={heroImage.url}
         alt={heroImage.alt}
+        button={button}
       />
       <Section>
         {content.map((contentBlock, key) => {
@@ -41,13 +44,21 @@ const ContentProvider = ({ contentPage }: Props) => {
               return <Heading3 key={key} text={contentBlock.text} />;
             }
             case TextTypes.Text: {
-              return (
-                <Text
-                  key={key}
-                  text={contentBlock.text}
-                  type={contentBlock.marks}
-                />
-              );
+              if (contentBlock.link) {
+                return (
+                  <Link key={key} link={contentBlock.link}>
+                    <Text text={contentBlock.text} type={contentBlock.marks} />
+                  </Link>
+                );
+              } else {
+                return (
+                  <Text
+                    key={key}
+                    text={contentBlock.text}
+                    type={contentBlock.marks}
+                  />
+                );
+              }
             }
             case TextTypes.Quote: {
               return <Quote key={key} text={contentBlock.text} />;
@@ -68,6 +79,8 @@ const ContentProvider = ({ contentPage }: Props) => {
               return <></>;
           }
         })}
+
+        {contentPage.images && <ImageList images={contentPage.images} />}
       </Section>
     </>
   );
