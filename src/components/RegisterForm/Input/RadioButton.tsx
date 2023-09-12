@@ -4,7 +4,6 @@ type Props = {
   label: string;
   onChange: () => void;
   defaultChecked?: boolean;
-  /* checked: boolean; */
 };
 
 const RadioButton = ({ id, value, label, onChange, defaultChecked }: Props) => {

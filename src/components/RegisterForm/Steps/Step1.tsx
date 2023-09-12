@@ -1,15 +1,21 @@
 import { useTranslation } from "next-i18next";
 import TextInput from "../Input/TextInput";
-import Button from "@/components/Button";
 import { useRegisterFormState } from "@/hooks/RegisterProvider";
-import { memo, useCallback, useMemo } from "react";
-import { RegisterForm } from "@/types/registerForm";
+import { memo, useEffect, useState } from "react";
+import ButtonNavigation from "./ButtonNavigation";
 
 type Props = {};
 
 const Step1 = ({}: Props) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
+  const [buttonDisabled, setButtonDisabled] = useState<boolean>(true);
   const { form, setValue, step } = useRegisterFormState();
+
+  useEffect(() => {
+    setButtonDisabled(
+      form.name.value.length === 0 || form.email.value.length === 0
+    );
+  }, [form]);
 
   return (
     <>
@@ -25,8 +31,11 @@ const Step1 = ({}: Props) => {
         onChange={(val: string) => setValue("email", val)}
         name="email"
       />
-      {/* TOOD cahnge */}
-      <Button onClick={(e: React.MouseEvent) => step(e, 2)}>Nästa</Button>
+      <ButtonNavigation
+        buttonDisabled={buttonDisabled}
+        step={step}
+        currentStep={1}
+      />
     </>
   );
 };

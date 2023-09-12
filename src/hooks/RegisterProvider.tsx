@@ -1,3 +1,4 @@
+import { RegisterApi } from "@/api/form/register";
 import { isEmpty } from "@/helpers/isEmpty";
 import { AttendingDays, RegisterForm } from "@/types/registerForm";
 import {
@@ -16,7 +17,8 @@ type RegisterFormState = {
   loading: boolean;
   currentStep: number;
   setCurrentStep: (no: number) => void;
-  step: (e: React.MouseEvent, no: number) => void;
+  step: (no: number) => void;
+  onSave: () => void;
 };
 
 const defaultForm: RegisterForm = {
@@ -35,6 +37,7 @@ const defaultFormState: RegisterFormState = {
   currentStep: 1,
   setCurrentStep: () => {},
   step: () => {},
+  onSave: () => {},
 };
 
 const RegisterFormContext = createContext<RegisterFormState>(defaultFormState);
@@ -50,8 +53,7 @@ export const RegisterFormProvider = ({
   const [currentStep, setCurrentStep] = useState<number>(1);
   const { form } = useMemo(() => ({ form: registerForm }), [registerForm]);
 
-  const step = (e: React.MouseEvent, no: number) => {
-    e.preventDefault();
+  const step = (no: number) => {
     setCurrentStep(no);
   };
 
@@ -68,12 +70,12 @@ export const RegisterFormProvider = ({
     [registerForm, setRegisterForm]
   );
 
-  const onSave = async (e: React.MouseEvent) => {
-    e.preventDefault();
-
+  const onSave = async () => {
     setLoading(true);
     try {
-      //await RegisterApi.postRegister(registerForm);
+      await RegisterApi.postRegister(registerForm);
+      setCurrentStep(4);
+      setRegisterForm(defaultForm);
     } catch (error) {
       console.error(error);
     } finally {
@@ -103,6 +105,7 @@ export const RegisterFormProvider = ({
         currentStep,
         setCurrentStep,
         step,
+        onSave,
       }}
     >
       {children}
@@ -119,6 +122,7 @@ export const useRegisterFormState = () => {
     currentStep,
     setCurrentStep,
     step,
+    onSave,
   } = useContext(RegisterFormContext);
 
   return {
@@ -129,5 +133,6 @@ export const useRegisterFormState = () => {
     currentStep,
     setCurrentStep,
     step,
+    onSave,
   };
 };

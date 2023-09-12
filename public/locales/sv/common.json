@@ -11,9 +11,11 @@
   "register-success": "Great success!",
   "register-success-text": "Vad kul att ni vill komma på vårt bröllop. Ses i juni!",
   "send": "Skicka",
-  "name": "Name",
+  "name": "Namn",
   "diet-preferences": "Kostpreferenser",
   "fri-sun": "Fredag-Söndag",
   "sat-sun": "Lördag-Söndag",
-  "sat": "Lördag"
+  "sat": "Lördag",
+  "email": "Email",
+  "next": "Nästa"
 }

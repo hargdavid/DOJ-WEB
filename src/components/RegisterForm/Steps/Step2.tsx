@@ -1,8 +1,8 @@
 import { useTranslation } from "next-i18next";
 import CheckBox from "../Input/Checkbox";
 import { useRegisterFormState } from "@/hooks/RegisterProvider";
-import Button from "@/components/Button";
 import TextInput from "../Input/TextInput";
+import ButtonNavigation from "./ButtonNavigation";
 
 type Props = {};
 
@@ -27,10 +27,7 @@ const Step2 = ({}: Props) => {
           name="typeOfDiet"
         />
       )}
-      <Button outlined onClick={(e: React.MouseEvent) => step(e, 1)}>
-        Bakåt
-      </Button>
-      <Button onClick={(e: React.MouseEvent) => step(e, 3)}>Nästa</Button>
+      <ButtonNavigation step={step} currentStep={2} />
     </>
   );
 };
