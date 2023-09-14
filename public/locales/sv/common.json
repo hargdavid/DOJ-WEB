@@ -13,9 +13,12 @@
   "send": "Skicka",
   "name": "Namn",
   "diet-preferences": "Kostpreferenser",
+  "diet-preferences?": "Har du kostpreferenser?",
   "fri-sun": "Fredag-Söndag",
   "sat-sun": "Lördag-Söndag",
   "sat": "Lördag",
   "email": "Email",
-  "next": "Nästa"
+  "next": "Nästa",
+  "basic-info": "Grundläggande information",
+  "staying-for": "Hur länge stannar ni?"
 }

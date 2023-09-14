@@ -3,6 +3,7 @@ import TextInput from "../Input/TextInput";
 import { useRegisterFormState } from "@/hooks/RegisterProvider";
 import { memo, useEffect, useState } from "react";
 import ButtonNavigation from "./ButtonNavigation";
+import Heading3 from "@/components/Content/Heading3";
 
 type Props = {};
 
@@ -19,6 +20,7 @@ const Step1 = ({}: Props) => {
 
   return (
     <>
+      <Heading3 text={t("basic-info")} />
       <TextInput
         placeholder={t("name")}
         value={form.name.value}

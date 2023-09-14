@@ -20,17 +20,11 @@ type Props = {
 };
 
 const ContentProvider = ({ contentPage }: Props) => {
-  const { title, subtitle, content, heroImage, button } = contentPage;
+  const { hero, content } = contentPage;
 
   return (
     <>
-      <Hero
-        subTitle={subtitle}
-        title={title}
-        imageUrl={heroImage.url}
-        alt={heroImage.alt}
-        button={button}
-      />
+      <Hero hero={hero} />
       <Section>
         {content.map((contentBlock, key) => {
           switch (contentBlock.type) {

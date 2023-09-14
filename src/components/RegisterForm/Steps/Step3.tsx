@@ -3,6 +3,7 @@ import { useRegisterFormState } from "@/hooks/RegisterProvider";
 import RadioButton from "../Input/RadioButton";
 import { AttendingDays } from "@/types/registerForm";
 import ButtonNavigation from "./ButtonNavigation";
+import Heading3 from "@/components/Content/Heading3";
 
 type Props = {};
 
@@ -12,6 +13,7 @@ const Step3 = ({}: Props) => {
 
   return (
     <>
+      <Heading3 text={t("staying-for")} />
       <RadioButton
         id="attending"
         label={t("fri-sun")}

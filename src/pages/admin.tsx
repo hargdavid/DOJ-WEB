@@ -1,7 +1,6 @@
 import { RegisterApi } from "@/api/form/register";
 import AdminSection from "@/components/AdminSection";
 import Title from "@/components/Content/Title";
-import List from "@/components/List";
 import { RegisterFormDto } from "@/types/registerForm";
 import { GetStaticProps, InferGetStaticPropsType } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";

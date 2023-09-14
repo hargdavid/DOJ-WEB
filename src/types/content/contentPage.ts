@@ -3,22 +3,32 @@ import { LinkButton, LinkButtonDto } from "./linkButton";
 export type ContentPage = {
   content: ContentBlock[];
   path: string;
-  subtitle: string;
-  title: string;
-  heroImage: Image;
+  hero: Hero;
   images?: ImageWithLink[];
-  button?: LinkButton;
 };
 
 export type ContentPageDTO = {
   content: ContentBlockDTO[];
   path: string;
+  hero: HeroDTO;
+  images?: ImageWithLinkDto[];
+} & Document;
+
+export type Hero = {
+  subtitle: string;
+  title: string;
+  heroImage: Image;
+  button?: LinkButton;
+  video?: Video;
+};
+
+export type HeroDTO = {
   subtitle: string;
   title: string;
   heroImage: ImageDto;
-  images?: ImageWithLinkDto[];
+  video?: ImageDto;
   button?: LinkButtonDto;
-} & Document;
+};
 
 export type ContentBlock = TextBlock | Image;
 
@@ -56,6 +66,7 @@ export enum ContentBlockType {
   Image = "image",
   Block = "block",
   Images = "images",
+  Video = "video",
 }
 
 export type TextBlockDto = {
@@ -72,11 +83,18 @@ export type TextBlockDto = {
   }[];
 };
 
-export type Image = {
+type Asset = {
   alt: string;
   url: string;
-  type: ContentBlockType.Image;
 };
+
+export type Image = {
+  type: ContentBlockType.Image;
+} & Asset;
+
+export type Video = {
+  type: ContentBlockType.Video;
+} & Asset;
 
 export type ImageDto = {
   alt: string;

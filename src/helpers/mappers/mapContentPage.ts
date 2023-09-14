@@ -4,6 +4,8 @@ import {
   ContentBlockType,
   ContentPage,
   ContentPageDTO,
+  Hero,
+  HeroDTO,
   Image,
   ImageDto,
   ImageWithLink,
@@ -16,24 +18,27 @@ import {
   TextBlockDto,
   TextTypes,
 } from "@/types/content/contentPage";
-import { mapImageBlock } from "./mapImageBlock";
+import { mapImageBlock, mapVideoBlock } from "./mapImageBlock";
 import { LinkButton, LinkButtonDto } from "@/types/content/linkButton";
 
 export const mapContentPage = (contentPageDTO: ContentPageDTO): ContentPage => {
   return {
     content: contentPageDTO.content.map(mapContentBlock),
     path: contentPageDTO.path,
-    subtitle: contentPageDTO.subtitle,
-    title: contentPageDTO.title,
-    heroImage: mapImageBlock(contentPageDTO.heroImage),
     images: contentPageDTO.images
       ? contentPageDTO.images.map(mapImageWithLinkBlock)
       : undefined,
-    button: contentPageDTO?.button
-      ? mapLinkButton(contentPageDTO?.button)
-      : undefined,
+    hero: mapHero(contentPageDTO.hero),
   };
 };
+
+export const mapHero = (heroDto: HeroDTO): Hero => ({
+  subtitle: heroDto?.subtitle ?? "",
+  title: heroDto?.title ?? "",
+  heroImage: mapImageBlock(heroDto.heroImage),
+  button: heroDto?.button ? mapLinkButton(heroDto?.button) : undefined,
+  video: heroDto?.video ? mapVideoBlock(heroDto?.video) : undefined,
+});
 
 const mapTextBlock = (textBlockDto: TextBlockDto): TextBlock => {
   if (textBlockDto.listItem) {
@@ -67,6 +72,7 @@ export const mapContentBlock = (
       return mapTextBlock(contentBlockDTO as TextBlockDto);
     }
     case ContentBlockType.Image:
+    case ContentBlockType.Video:
     case ContentBlockType.Images: {
       return mapImageBlock(contentBlockDTO as ImageDto);
     }
