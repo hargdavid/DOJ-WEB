@@ -5,6 +5,7 @@ type Props = {
   className?: string;
   name: string;
   type?: "text" | "password";
+  error?: boolean;
 };
 
 const TextInput = ({
@@ -14,10 +15,13 @@ const TextInput = ({
   className,
   name,
   type = "text",
+  error,
 }: Props) => {
   return (
     <input
-      className={`px-6 py-4 outline-dark-green border rounded-md ${className}`}
+      className={`px-6 py-4 outline-dark-green border rounded-md ${className} ${
+        error && "border-yellow outline-yellow"
+      }`}
       type={type}
       placeholder={placeholder}
       value={value}

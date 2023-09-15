@@ -11,10 +11,18 @@ const Step1 = ({}: Props) => {
   const { t } = useTranslation("common");
   const [buttonDisabled, setButtonDisabled] = useState<boolean>(true);
   const { form, setValue, step } = useRegisterFormState();
+  const [emailError, setEmailError] = useState<boolean>(false);
 
   useEffect(() => {
+    const emailRegexp = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+    const emailVerified = emailRegexp.test(form.email.value);
+
+    setEmailError(form.email.value.length !== 0 && !emailVerified);
+
     setButtonDisabled(
-      form.name.value.length === 0 || form.email.value.length === 0
+      form.name.value.length === 0 ||
+        form.email.value.length === 0 ||
+        !emailVerified
     );
   }, [form]);
 
@@ -32,6 +40,7 @@ const Step1 = ({}: Props) => {
         value={form.email.value}
         onChange={(val: string) => setValue("email", val)}
         name="email"
+        error={emailError}
       />
       <ButtonNavigation
         buttonDisabled={buttonDisabled}
