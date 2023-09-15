@@ -108,11 +108,15 @@ export type ImageDto = {
 
 export type ImageWithLink = Image & {
   link?: Link;
+  title?: string;
+  description?: string;
 };
 
 export type ImageWithLinkDto = {
   image: ImageDto;
   link: LinkDto;
+  title: string;
+  description: string;
 };
 
 export enum MarkType {
@@ -130,3 +134,19 @@ export type LinkDto = {
 };
 
 export type Reference = { current: string; _type: string };
+
+export type RegisterPage = ContentPage & {
+  success: SuccessContent;
+};
+
+export type SuccessContent = {
+  images?: ImageWithLink[];
+  content?: ContentBlock[];
+};
+
+export type RegisterPageDto = ContentPageDTO & {
+  success: {
+    images?: ImageWithLinkDto[];
+    content?: ContentBlockDTO[];
+  };
+};

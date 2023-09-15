@@ -14,5 +14,10 @@ export const mapMetaData = (metaDto: MetaDataDto): MetaData => {
     keywords: metaDto.keywords,
     logo: mapImageBlock(metaDto.logo),
     title: metaDto.title,
+    social: {
+      facebook: metaDto?.social?.facebook ?? "",
+      instagram: metaDto?.social?.instagram ?? "",
+      mail: metaDto?.social?.mail ?? "",
+    },
   };
 };

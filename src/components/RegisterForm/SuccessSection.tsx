@@ -2,7 +2,6 @@ import Section from "../Section";
 import Heading2 from "../Content/Heading2";
 import Button from "../Button";
 import { useRegisterFormState } from "@/hooks/RegisterProvider";
-import { useState } from "react";
 import ConfettiExplosion from "react-confetti-explosion";
 
 type Props = {};

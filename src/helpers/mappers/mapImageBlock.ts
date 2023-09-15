@@ -4,7 +4,7 @@ import {
   ImageDto,
   Video,
 } from "@/types/content/contentPage";
-import { imageAssetToPath } from "../imageAssetToPath";
+import { imageAssetToPath, videoAssetToPath } from "../imageAssetToPath";
 
 export const mapImageBlock = (imageDto: ImageDto): Image => ({
   alt: imageDto.alt ?? "",
@@ -14,6 +14,6 @@ export const mapImageBlock = (imageDto: ImageDto): Image => ({
 
 export const mapVideoBlock = (videoDto: ImageDto): Video => ({
   alt: videoDto.alt ?? "",
-  url: imageAssetToPath(videoDto?.asset?._ref) ?? "",
+  url: videoAssetToPath(videoDto?.asset?._ref) ?? "",
   type: ContentBlockType.Video,
 });

@@ -6,13 +6,20 @@ export const imageAssetToPath = (rawString?: string): string => {
   if (typeof rawString === "undefined") {
     return "";
   } else {
-    const cdnBasePath = process.env.NEXT_PUBLIC_CDN_PATH;
+    const cdnBasePath = `${process.env.NEXT_PUBLIC_CDN_PATH}images/${process.env.NEXT_PUBLIC_CMS_ID}/production/`;
     const type =
-      rawString.indexOf("-jpg") === -1 ? ImageType.PNG : ImageType.JPG;
+      rawString.indexOf("-jpg") !== -1
+        ? ImageType.JPG
+        : rawString.indexOf("-png") !== -1
+        ? ImageType.PNG
+        : ImageType.MP4;
+
     let formattedString = rawString.replace("image-", "");
 
     if (type === ImageType.JPG) {
       formattedString = formattedString.replace("-jpg", ".jpg");
+    } else if (type === ImageType.MP4) {
+      formattedString = formattedString.replace("-mp4", ".mp4");
     } else {
       formattedString = formattedString.replace("-png", ".png");
     }
@@ -21,7 +28,22 @@ export const imageAssetToPath = (rawString?: string): string => {
   }
 };
 
+export const videoAssetToPath = (rawString: string): string => {
+  if (typeof rawString === "undefined") {
+    return "";
+  }
+
+  const cdnBasePath = `${process.env.NEXT_PUBLIC_CDN_PATH}files/${process.env.NEXT_PUBLIC_CMS_ID}/production/`;
+  const type = ImageType.MP4;
+
+  let formattedString = rawString.replace("file-", "");
+  formattedString = formattedString.replace("-mp4", ".mp4");
+
+  return cdnBasePath + formattedString;
+};
+
 enum ImageType {
   JPG,
   PNG,
+  MP4,
 }

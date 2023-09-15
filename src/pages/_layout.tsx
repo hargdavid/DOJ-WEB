@@ -7,7 +7,7 @@ import Head from "next/head";
 const inter = Inter({ subsets: ["latin"] });
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
-  const { isDesktop, isTop, navigation, meta } = useGlobalState();
+  const { isDesktop, isTop, navigation, meta, social } = useGlobalState();
 
   return (
     <>
@@ -44,7 +44,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
         logo={meta?.logo}
       />
       <main className="bg-lime">{children}</main>
-      <Footer navigation={navigation} />
+      <Footer navigation={navigation} social={social} />
     </>
   );
 };

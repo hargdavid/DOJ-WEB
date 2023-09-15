@@ -23,7 +23,7 @@ import { LinkButton, LinkButtonDto } from "@/types/content/linkButton";
 
 export const mapContentPage = (contentPageDTO: ContentPageDTO): ContentPage => {
   return {
-    content: contentPageDTO.content.map(mapContentBlock),
+    content: contentPageDTO.content?.map(mapContentBlock),
     path: contentPageDTO.path,
     images: contentPageDTO.images
       ? contentPageDTO.images.map(mapImageWithLinkBlock)
@@ -35,7 +35,7 @@ export const mapContentPage = (contentPageDTO: ContentPageDTO): ContentPage => {
 export const mapHero = (heroDto: HeroDTO): Hero => ({
   subtitle: heroDto?.subtitle ?? "",
   title: heroDto?.title ?? "",
-  heroImage: mapImageBlock(heroDto.heroImage),
+  heroImage: mapImageBlock(heroDto?.heroImage),
   button: heroDto?.button ? mapLinkButton(heroDto?.button) : undefined,
   video: heroDto?.video ? mapVideoBlock(heroDto?.video) : undefined,
 });
@@ -139,7 +139,7 @@ const mapToLink = (linkDto: LinkDto): Link => {
   }
 };
 
-const mapImageWithLinkBlock = (
+export const mapImageWithLinkBlock = (
   imageWithLinkDto: ImageWithLinkDto
 ): ImageWithLink => {
   const image = mapImageBlock(imageWithLinkDto.image as ImageDto);
@@ -152,6 +152,8 @@ const mapImageWithLinkBlock = (
             ...imageWithLinkDto.link,
             _type: MarkType.LinkWithImage,
           }),
+    title: imageWithLinkDto?.title ?? undefined,
+    description: imageWithLinkDto?.description ?? undefined,
   };
 };
 

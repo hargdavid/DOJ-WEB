@@ -32,11 +32,11 @@ const Header = ({ isDesktop, isTop, navigation, logo }: Props) => {
       </Link>
       {isDesktop ? (
         <nav className="flex justify-between items-center gap-4">
-          <Links navigation={navigation} />
+          <Links navigation={navigation} isTop={isTop} />
         </nav>
       ) : (
         <MobileMenu>
-          <Links navigation={navigation} />
+          <Links navigation={navigation} isTop={false} />
         </MobileMenu>
       )}
     </header>

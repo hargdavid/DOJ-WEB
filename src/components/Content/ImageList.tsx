@@ -1,6 +1,5 @@
-import { Image as ImageType, ImageWithLink } from "@/types/content/contentPage";
-import Image from "./Image";
-import Link from "./Link";
+import { ImageWithLink } from "@/types/content/contentPage";
+import ImageListElement from "./ImageListElement";
 
 type Props = {
   images: ImageWithLink[];
@@ -8,17 +7,9 @@ type Props = {
 
 const ImageList = ({ images }: Props) => {
   return (
-    <ul className="flex gap-2 flex-col md:flex-row">
+    <ul className="flex gap-4 md:gap-2 flex-col md:flex-row md:h-[400px]">
       {images.map((image, key) => (
-        <li key={key} className="flex-auto">
-          {typeof image.link !== "undefined" ? (
-            <Link link={image.link}>
-              <Image url={image.url} alt={image.alt} />
-            </Link>
-          ) : (
-            <Image url={image.url} alt={image.alt} />
-          )}
-        </li>
+        <ImageListElement key={key} image={image} />
       ))}
     </ul>
   );

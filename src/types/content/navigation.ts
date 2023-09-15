@@ -21,6 +21,7 @@ export type MetaData = {
   keywords: string;
   logo: Image;
   title: string;
+  social: Social;
 };
 
 export type Favicon = {
@@ -38,6 +39,7 @@ export type MetaDataDto = {
   logo: ImageDto;
   title: string;
   _type: string;
+  social: Social;
 };
 
 export type FaviconDto = {
@@ -47,4 +49,10 @@ export type FaviconDto = {
   faviconBig: ImageDto;
   faviconSmall: ImageDto;
   _type: string;
+};
+
+export type Social = {
+  facebook: string;
+  instagram: string;
+  mail: string;
 };

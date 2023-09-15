@@ -1,7 +1,8 @@
 import { mapContentPage } from "@/helpers/mappers/mapContentPage";
 import { mapMetaData } from "@/helpers/mappers/mapMetaData";
 import { mapNavigation } from "@/helpers/mappers/mapNavigation";
-import { ContentPageDTO } from "@/types/content/contentPage";
+import { mapRegisterPage } from "@/helpers/mappers/mapRegisterPage";
+import { ContentPageDTO, RegisterPageDto } from "@/types/content/contentPage";
 import {
   MetaData,
   NavigationDto,
@@ -64,8 +65,23 @@ export default class ContentApi {
 
   public static getRegisterPage = async () => {
     try {
+      const query = encodeURIComponent(`*[_type == 'registerPage']`);
+      const response = await axios.get(this.contentUrl + query);
+      const content = response.data.result[0] as RegisterPageDto;
+
+      if (typeof content === "undefined") {
+        throw { message: "Couldn't find content", code: 404 };
+      }
+      return mapRegisterPage(response.data.result[0]);
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  public static getErrorPage = async () => {
+    try {
       const query = encodeURIComponent(
-        `*[_type == 'contentPage'][path == 'register']`
+        `*[_type == 'contentPage'][path == '404']`
       );
       const response = await axios.get(this.contentUrl + query);
       const content = response.data.result[0] as ContentPageDTO;

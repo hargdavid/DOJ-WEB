@@ -2,15 +2,15 @@ import RegisterForm from "@/components/RegisterForm";
 import { GetStaticProps, InferGetStaticPropsType } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useEffect, useState } from "react";
-import { ContentPage } from "@/types/content/contentPage";
+import { RegisterPage } from "@/types/content/contentPage";
 import ContentApi from "@/api/content/page";
-import ContentProvider from "@/components/Content/ContentProvider";
 import { RegisterFormProvider } from "@/hooks/RegisterProvider";
+import ContentPageProvider from "@/components/Content/ContentPageProvider";
 
 type Props = {};
 
 const Register = (_props: InferGetStaticPropsType<typeof getStaticProps>) => {
-  const [content, setContent] = useState<ContentPage>();
+  const [content, setContent] = useState<RegisterPage>();
 
   useEffect(() => {
     (async () => {
@@ -20,10 +20,8 @@ const Register = (_props: InferGetStaticPropsType<typeof getStaticProps>) => {
 
   return (
     <RegisterFormProvider>
-      <section>
-        {content && <ContentProvider contentPage={content} />}
-        <RegisterForm />
-      </section>
+      {content && <ContentPageProvider contentPage={content} />}
+      <RegisterForm success={content?.success} />
     </RegisterFormProvider>
   );
 };

@@ -1,5 +1,7 @@
+import { LoginApi } from "@/api/auth/login";
 import ContentApi from "@/api/content/page";
-import { MetaData, NavigationItem } from "@/types/content/navigation";
+import { LoginFormType } from "@/components/LoginForm";
+import { MetaData, NavigationItem, Social } from "@/types/content/navigation";
 import { createContext, useContext, useEffect, useState } from "react";
 
 type GlobalState = {
@@ -7,6 +9,9 @@ type GlobalState = {
   isTop: boolean;
   navigation: NavigationItem[];
   meta: MetaData | undefined;
+  isLoggedIn: boolean;
+  login: (loginForm: LoginFormType) => Promise<void>;
+  social: Social | undefined;
 };
 
 const GlobalStateContext = createContext<GlobalState>({
@@ -14,6 +19,9 @@ const GlobalStateContext = createContext<GlobalState>({
   isTop: true,
   navigation: [],
   meta: undefined,
+  isLoggedIn: false,
+  login: async () => {},
+  social: undefined,
 });
 
 export const GlobalStateProvider = ({
@@ -25,6 +33,8 @@ export const GlobalStateProvider = ({
   const [isTop, setIsTop] = useState<boolean>(true);
   const [navigation, setNavigation] = useState<NavigationItem[]>([]);
   const [meta, setMeta] = useState<MetaData>();
+  const [social, setSocial] = useState<Social>();
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
   const isDesktopSize = (screenSize: number) => {
     return setIsDesktop(screenSize > 768);
@@ -32,6 +42,16 @@ export const GlobalStateProvider = ({
 
   const isTopOfPage = (scroll: number) => {
     return setIsTop(scroll < 30);
+  };
+
+  const login = async (loginForm: LoginFormType) => {
+    try {
+      await LoginApi.postLogin(loginForm);
+
+      setIsLoggedIn(true);
+    } catch (error) {
+      throw error;
+    }
   };
 
   useEffect(() => {
@@ -55,17 +75,21 @@ export const GlobalStateProvider = ({
       const { navigation, meta } = await ContentApi.getNavigation();
       setNavigation(navigation);
       setMeta(meta);
+      setSocial(meta.social);
     })();
   }, []);
 
   return (
-    <GlobalStateContext.Provider value={{ isDesktop, isTop, navigation, meta }}>
+    <GlobalStateContext.Provider
+      value={{ isDesktop, isTop, navigation, meta, isLoggedIn, login, social }}
+    >
       {children}
     </GlobalStateContext.Provider>
   );
 };
 
 export const useGlobalState = () => {
-  const { isDesktop, isTop, navigation, meta } = useContext(GlobalStateContext);
-  return { isDesktop, isTop, navigation, meta };
+  const { isDesktop, isTop, navigation, meta, isLoggedIn, login, social } =
+    useContext(GlobalStateContext);
+  return { isDesktop, isTop, navigation, meta, isLoggedIn, login, social };
 };

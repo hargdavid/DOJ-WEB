@@ -1,42 +1,28 @@
 import { RegisterApi } from "@/api/form/register";
 import AdminSection from "@/components/AdminSection";
-import Title from "@/components/Content/Title";
+import { useGlobalState } from "@/hooks/GlobalProvider";
 import { RegisterFormDto } from "@/types/registerForm";
-import { GetStaticProps, InferGetStaticPropsType } from "next";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import { useCallback, useEffect, useState } from "react";
 
-type Props = {};
-
-const AdminPage = (_props: InferGetStaticPropsType<typeof getStaticProps>) => {
+const AdminPage = () => {
+  const { isLoggedIn } = useGlobalState();
   const [registered, setRegistered] = useState<RegisterFormDto[]>([]);
+  const router = useRouter();
 
-  useEffect(() => {
-    (async () => {
-      setRegistered(await RegisterApi.getRegistered());
-    })();
+  const fetchData = useCallback(async () => {
+    setRegistered(await RegisterApi.getRegistered());
   }, []);
 
-  return (
-    <>
-      <div className="pt-44"></div>
-      <section className="flex items-center justify-center flex-col">
-        <Title title="Registrerade" />
-        <AdminSection />
-        <ul className="flex flex-col">
-          {registered.map((register, key) => (
-            <li key={key}>{register.name}</li>
-          ))}
-        </ul>
-      </section>
-    </>
-  );
-};
+  useEffect(() => {
+    if (!isLoggedIn) {
+      router.push("/404");
+    } else {
+      fetchData();
+    }
+  }, [isLoggedIn, fetchData, router]);
 
-export const getStaticProps: GetStaticProps<Props> = async ({ locale }) => ({
-  props: {
-    ...(await serverSideTranslations(locale ?? "sv", ["common"])),
-  },
-});
+  return <>{isLoggedIn && <AdminSection registered={registered} />}</>;
+};
 
 export default AdminPage;

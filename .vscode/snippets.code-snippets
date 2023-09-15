@@ -4,7 +4,7 @@
     "body": [
       "type Props = {}",
       "",
-      "const ${1:name}= ({}: Props) => {",
+      "const ${1:name} = ({}: Props) => {",
       " return <></>;",
       "};",
       "",
