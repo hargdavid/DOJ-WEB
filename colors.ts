@@ -10,6 +10,7 @@ const colors = {
   lime: "#f7fee7",
   green: "#3f6212",
   gray: "#808080",
+  pink: "#123000",
 };
 
 export default colors;
