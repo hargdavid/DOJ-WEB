@@ -20,6 +20,7 @@ export type Hero = {
   heroImage: Image;
   button?: LinkButton;
   video?: Video;
+  mobileImage?: Image;
 };
 
 export type HeroDTO = {
@@ -28,9 +29,10 @@ export type HeroDTO = {
   heroImage: ImageDto;
   video?: ImageDto;
   button?: LinkButtonDto;
+  mobileImage?: ImageDto;
 };
 
-export type ContentBlock = TextBlock | Image;
+export type ContentBlock = TextBlock | Image | TextBlockWithStyleOrLink;
 
 export type ContentBlockDTO = TextBlockDto | ImageDto;
 
@@ -41,6 +43,16 @@ export enum TextTypes {
   Text = "Text",
   Quote = "Quote",
   Bullet = "Bullet",
+  TextList = "TextList",
+}
+
+export enum TagTypes {
+  H1 = "h1",
+  H2 = "h2",
+  H3 = "h3",
+  Text = "p",
+  Quote = "q",
+  Bullet = "li",
 }
 
 export enum MarkTypes {
@@ -55,6 +67,12 @@ export type TextBlock = {
   text: string;
   marks: MarkTypes | undefined;
   link?: Link;
+};
+
+export type TextBlockWithStyleOrLink = {
+  type: TextTypes.TextList;
+  text: TextBlock[];
+  style: TagTypes;
 };
 
 export type Link = {

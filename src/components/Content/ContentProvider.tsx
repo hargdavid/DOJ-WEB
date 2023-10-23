@@ -1,6 +1,7 @@
 import {
   ContentBlock,
   ContentBlockType,
+  TextBlockWithStyleOrLink,
   TextTypes,
 } from "@/types/content/contentPage";
 import Title from "./Title";
@@ -11,6 +12,8 @@ import Quote from "./Quote";
 import Bullet from "./Bullet";
 import CustomImage from "./Image";
 import Link from "./Link";
+import Span from "./Span";
+import CustomTag from "./CustomTag";
 
 type Props = {
   content: ContentBlock[];
@@ -34,7 +37,7 @@ const ContentProvider = ({ content }: Props) => {
             if (contentBlock.link) {
               return (
                 <Link key={key} link={contentBlock.link}>
-                  <Text text={contentBlock.text} type={contentBlock.marks} />
+                  <Span text={contentBlock.text} type={contentBlock.marks} />
                 </Link>
               );
             } else {
@@ -55,11 +58,27 @@ const ContentProvider = ({ content }: Props) => {
           }
           case ContentBlockType.Image: {
             return (
-              <CustomImage
-                key={key}
-                url={contentBlock.url}
-                alt={contentBlock.alt}
-              />
+              <div key={key} className="w-full md:w-[60%]">
+                <CustomImage url={contentBlock.url} alt={contentBlock.alt} />
+              </div>
+            );
+          }
+          case TextTypes.TextList: {
+            const textBlockList = contentBlock as TextBlockWithStyleOrLink;
+            return (
+              <CustomTag key={key} type={textBlockList.style}>
+                <>
+                  {textBlockList.text.map((textBlock, key) =>
+                    textBlock.link ? (
+                      <Link key={key} link={textBlock.link}>
+                        {textBlock.text}
+                      </Link>
+                    ) : (
+                      <span key={key}>{textBlock.text}</span>
+                    )
+                  )}
+                </>
+              </CustomTag>
             );
           }
           default:

@@ -1,5 +1,6 @@
 import ContentApi from "@/api/content/page";
 import ContentPageProvider from "@/components/Content/ContentPageProvider";
+import SkeletonFiller from "@/components/Content/SkeletonFiller";
 import { ContentPage } from "@/types/content/contentPage";
 import { useEffect, useState } from "react";
 
@@ -12,7 +13,15 @@ const NotFound = () => {
     })();
   }, []);
 
-  return <>{content && <ContentPageProvider contentPage={content} />}</>;
+  return (
+    <>
+      {content ? (
+        <ContentPageProvider contentPage={content} />
+      ) : (
+        <SkeletonFiller />
+      )}
+    </>
+  );
 };
 
 export default NotFound;

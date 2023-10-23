@@ -6,15 +6,11 @@ type Props = {
 };
 
 const Text = ({ text, type }: Props) => {
-  return (
-    <p
-      className={`${type === MarkTypes.Bold && "bold"} ${
-        type === MarkTypes.Italic && "italic"
-      } ${type === MarkTypes.Underline && "underline"}`}
-    >
-      {text}
-    </p>
-  );
+  const stylingClasses = `${type === MarkTypes.Bold ? "bold " : ""}${
+    type === MarkTypes.Italic ? "italic " : ""
+  } ${type === MarkTypes.Underline ? "underline " : ""}`;
+
+  return <p className={`${stylingClasses} max-w-xl max-md:px-4`}>{text}</p>;
 };
 
 export default Text;

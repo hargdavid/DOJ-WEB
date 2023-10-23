@@ -7,7 +7,7 @@ import ProgressBar from "./ProgressBar";
 import { SuccessContent } from "@/types/content/contentPage";
 import ImageList from "../Content/ImageList";
 import ContentProvider from "../Content/ContentProvider";
-import Section from "../Section";
+import Section from "../Section/Section";
 
 type Props = { success?: SuccessContent };
 

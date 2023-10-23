@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import { ContentPage } from "@/types/content/contentPage";
 import ContentPageProvider from "@/components/Content/ContentPageProvider";
 import { useRouter } from "next/router";
+import SkeletonFiller from "@/components/Content/SkeletonFiller";
 
 const ContentPage = () => {
   const [contentPage, setContentPage] = useState<ContentPage>(); //TODO change this
@@ -26,7 +27,13 @@ const ContentPage = () => {
   }, [pathname, router]);
 
   return (
-    <>{contentPage && <ContentPageProvider contentPage={contentPage} />}</>
+    <>
+      {contentPage ? (
+        <ContentPageProvider contentPage={contentPage} />
+      ) : (
+        <SkeletonFiller />
+      )}
+    </>
   );
 };
 

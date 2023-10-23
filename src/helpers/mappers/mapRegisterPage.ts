@@ -9,7 +9,7 @@ export const mapRegisterPage = (
   registerPageDto: RegisterPageDto
 ): RegisterPage => {
   return {
-    content: registerPageDto.content.map(mapContentBlock),
+    content: mapContentBlock(registerPageDto.content),
     path: registerPageDto.path,
     images: registerPageDto.images
       ? registerPageDto.images.map(mapImageWithLinkBlock)
@@ -18,8 +18,9 @@ export const mapRegisterPage = (
     success: {
       images:
         registerPageDto.success.images?.map(mapImageWithLinkBlock) ?? undefined,
-      content:
-        registerPageDto.success.content?.map(mapContentBlock) ?? undefined,
+      content: registerPageDto.success.content
+        ? mapContentBlock(registerPageDto.success.content)
+        : undefined,
     },
   };
 };

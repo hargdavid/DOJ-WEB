@@ -1,14 +1,11 @@
 import ContentApi from "@/api/content/page";
 import ContentPageProvider from "@/components/Content/ContentPageProvider";
-import { useGlobalState } from "@/hooks/GlobalProvider";
+import SkeletonFiller from "@/components/Content/SkeletonFiller";
 import { ContentPage } from "@/types/content/contentPage";
 import { useEffect, useState } from "react";
 
 const Home = () => {
   const [content, setContent] = useState<ContentPage>();
-  const { isLoggedIn } = useGlobalState();
-
-  console.log("isLoggedIncontet", isLoggedIn);
 
   useEffect(() => {
     (async () => {
@@ -16,7 +13,15 @@ const Home = () => {
     })();
   }, []);
 
-  return <>{content && <ContentPageProvider contentPage={content} />}</>;
+  return (
+    <>
+      {content ? (
+        <ContentPageProvider contentPage={content} />
+      ) : (
+        <SkeletonFiller />
+      )}
+    </>
+  );
 };
 
 export default Home;

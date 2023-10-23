@@ -6,7 +6,6 @@ import {
   ContentPageDTO,
   Hero,
   HeroDTO,
-  Image,
   ImageDto,
   ImageWithLink,
   ImageWithLinkDto,
@@ -14,8 +13,10 @@ import {
   LinkDto,
   MarkType,
   MarkTypes,
+  TagTypes,
   TextBlock,
   TextBlockDto,
+  TextBlockWithStyleOrLink,
   TextTypes,
 } from "@/types/content/contentPage";
 import { mapImageBlock, mapVideoBlock } from "./mapImageBlock";
@@ -23,7 +24,7 @@ import { LinkButton, LinkButtonDto } from "@/types/content/linkButton";
 
 export const mapContentPage = (contentPageDTO: ContentPageDTO): ContentPage => {
   return {
-    content: contentPageDTO.content?.map(mapContentBlock),
+    content: mapContentBlock(contentPageDTO.content),
     path: contentPageDTO.path,
     images: contentPageDTO.images
       ? contentPageDTO.images.map(mapImageWithLinkBlock)
@@ -38,6 +39,9 @@ export const mapHero = (heroDto: HeroDTO): Hero => ({
   heroImage: mapImageBlock(heroDto?.heroImage),
   button: heroDto?.button ? mapLinkButton(heroDto?.button) : undefined,
   video: heroDto?.video ? mapVideoBlock(heroDto?.video) : undefined,
+  mobileImage: heroDto?.mobileImage
+    ? mapImageBlock(heroDto?.mobileImage)
+    : undefined,
 });
 
 const mapTextBlock = (textBlockDto: TextBlockDto): TextBlock => {
@@ -65,18 +69,36 @@ const mapTextBlock = (textBlockDto: TextBlockDto): TextBlock => {
 };
 
 export const mapContentBlock = (
-  contentBlockDTO: ContentBlockDTO
-): ContentBlock => {
-  switch (contentBlockDTO._type) {
-    case ContentBlockType.Block: {
-      return mapTextBlock(contentBlockDTO as TextBlockDto);
-    }
-    case ContentBlockType.Image:
-    case ContentBlockType.Video:
-    case ContentBlockType.Images: {
-      return mapImageBlock(contentBlockDTO as ImageDto);
-    }
+  contentBlockDTOs: ContentBlockDTO[]
+): ContentBlock[] => {
+  const contentBlocks: ContentBlock[] = [];
+
+  if (contentBlockDTOs?.length > 0) {
+    contentBlockDTOs?.forEach((contentBlockDTO) => {
+      switch (contentBlockDTO._type) {
+        case ContentBlockType.Block: {
+          const contentBlockText = contentBlockDTO as TextBlockDto;
+          if (contentBlockText.markDefs.length > 0) {
+            contentBlocks.push({
+              type: TextTypes.TextList,
+              text: mapTextList(contentBlockDTO as TextBlockDto),
+              style: TagTypes.Text,
+            } as TextBlockWithStyleOrLink);
+          } else {
+            contentBlocks.push(mapTextBlock(contentBlockDTO as TextBlockDto));
+          }
+          return;
+        }
+        case ContentBlockType.Image:
+        case ContentBlockType.Video:
+        case ContentBlockType.Images: {
+          return contentBlocks.push(mapImageBlock(contentBlockDTO as ImageDto));
+        }
+      }
+    });
   }
+
+  return contentBlocks;
 };
 
 const mapTextBlockStyle = (style: string): TextTypes => {
@@ -162,3 +184,27 @@ export const mapLinkButton = (linkButton: LinkButtonDto): LinkButton => ({
   title: linkButton.title,
   isButton: linkButton.isButton,
 });
+
+const mapTextList = (textBlock: TextBlockDto): TextBlock[] => {
+  return textBlock.children.map((textChild) => {
+    if (textChild.marks.length > 0) {
+      const linkEl = textBlock.markDefs.find(
+        (markDef) => markDef._key === textChild.marks[0]
+      );
+      if (linkEl) {
+        return {
+          type: TextTypes.Text,
+          text: textChild.text,
+          marks: mapTextMarks(textChild.marks[0]),
+          link: mapToLink(linkEl),
+        };
+      }
+    }
+
+    return {
+      type: TextTypes.Text,
+      text: textChild.text,
+      marks: mapTextMarks(textChild.marks[0]),
+    };
+  });
+};

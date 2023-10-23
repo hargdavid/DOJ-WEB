@@ -6,6 +6,7 @@ import { RegisterPage } from "@/types/content/contentPage";
 import ContentApi from "@/api/content/page";
 import { RegisterFormProvider } from "@/hooks/RegisterProvider";
 import ContentPageProvider from "@/components/Content/ContentPageProvider";
+import SkeletonFiller from "@/components/Content/SkeletonFiller";
 
 type Props = {};
 
@@ -20,7 +21,11 @@ const Register = (_props: InferGetStaticPropsType<typeof getStaticProps>) => {
 
   return (
     <RegisterFormProvider>
-      {content && <ContentPageProvider contentPage={content} />}
+      {content ? (
+        <ContentPageProvider contentPage={content} />
+      ) : (
+        <SkeletonFiller />
+      )}
       <RegisterForm success={content?.success} />
     </RegisterFormProvider>
   );

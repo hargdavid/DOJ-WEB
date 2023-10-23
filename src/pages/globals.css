@@ -20,9 +20,10 @@
 @layer base {
   body {
     font-family: "Minerva-bold";
-    @apply bg-lime text-black;
+    @apply bg-lime text-green;
   }
-  h1 {
+  h1,
+  h2 {
     font-family: "Minerva-italic";
   }
   .bold {
