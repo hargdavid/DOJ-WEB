@@ -26,6 +26,9 @@
   h2 {
     font-family: "Minerva-italic";
   }
+  p {
+    @apply max-md:px-4;
+  }
   .bold {
     font-family: "Minerva";
   }

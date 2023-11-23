@@ -9,7 +9,7 @@ const LinkButton = ({ href, title, variant = "primary" }: Props) => {
         return "border-green text-green hover:bg-green";
       case "primary":
       default:
-        return "border-orange text-orange hover:bg-orange";
+        return "border-brown text-brown hover:bg-brown";
     }
   };
 

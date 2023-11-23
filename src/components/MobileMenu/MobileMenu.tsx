@@ -2,9 +2,9 @@ import { Bars3Icon, CogIcon, XMarkIcon } from "@heroicons/react/24/solid";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
-type Props = { children: React.ReactNode };
+type Props = { children: React.ReactNode; isTop: boolean };
 
-const MobileMenu = ({ children }: Props) => {
+const MobileMenu = ({ children, isTop }: Props) => {
   const [open, setOpen] = useState<boolean>(false);
   const [animationClass, setAnimationClass] = useState<string>("left-full");
   const router = useRouter();
@@ -31,7 +31,10 @@ const MobileMenu = ({ children }: Props) => {
 
   return (
     <>
-      <button onClick={onOpen} className="w-12">
+      <button
+        onClick={onOpen}
+        className={`w-12 ${isTop ? "text-white" : "text-green"} `}
+      >
         <Bars3Icon />
       </button>
 
