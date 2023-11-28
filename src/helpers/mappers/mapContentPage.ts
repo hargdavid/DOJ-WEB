@@ -25,10 +25,10 @@ import { LinkButton, LinkButtonDto } from "@/types/content/linkButton";
 export const mapContentPage = (contentPageDTO: ContentPageDTO): ContentPage => {
   return {
     content: mapContentBlock(contentPageDTO.content),
-    path: contentPageDTO.path,
+    path: contentPageDTO.path ?? null,
     images: contentPageDTO.images
       ? contentPageDTO.images.map(mapImageWithLinkBlock)
-      : undefined,
+      : null,
     hero: mapHero(contentPageDTO.hero),
   };
 };
@@ -37,11 +37,11 @@ export const mapHero = (heroDto: HeroDTO): Hero => ({
   subtitle: heroDto?.subtitle ?? "",
   title: heroDto?.title ?? "",
   heroImage: mapImageBlock(heroDto?.heroImage),
-  button: heroDto?.button ? mapLinkButton(heroDto?.button) : undefined,
-  video: heroDto?.video ? mapVideoBlock(heroDto?.video) : undefined,
+  button: heroDto?.button ? mapLinkButton(heroDto?.button) : null,
+  video: heroDto?.video ? mapVideoBlock(heroDto?.video) : null,
   mobileImage: heroDto?.mobileImage
     ? mapImageBlock(heroDto?.mobileImage)
-    : undefined,
+    : null,
 });
 
 const mapTextBlock = (textBlockDto: TextBlockDto): TextBlock => {
@@ -53,7 +53,7 @@ const mapTextBlock = (textBlockDto: TextBlockDto): TextBlock => {
       link:
         textBlockDto.markDefs.length > 0
           ? mapToLink(textBlockDto.markDefs[0])
-          : undefined,
+          : null,
     };
   } else {
     return {
@@ -63,7 +63,7 @@ const mapTextBlock = (textBlockDto: TextBlockDto): TextBlock => {
       link:
         textBlockDto.markDefs.length > 0
           ? mapToLink(textBlockDto.markDefs[0])
-          : undefined,
+          : null,
     };
   }
 };
@@ -169,13 +169,13 @@ export const mapImageWithLinkBlock = (
     ...image,
     link:
       typeof imageWithLinkDto.link === "undefined"
-        ? undefined
+        ? null
         : mapToLink({
             ...imageWithLinkDto.link,
             _type: MarkType.LinkWithImage,
           }),
-    title: imageWithLinkDto?.title ?? undefined,
-    description: imageWithLinkDto?.description ?? undefined,
+    title: imageWithLinkDto?.title ?? null,
+    description: imageWithLinkDto?.description ?? null,
   };
 };
 
@@ -205,6 +205,7 @@ const mapTextList = (textBlock: TextBlockDto): TextBlock[] => {
       type: TextTypes.Text,
       text: textChild.text,
       marks: mapTextMarks(textChild.marks[0]),
+      link: null,
     };
   });
 };

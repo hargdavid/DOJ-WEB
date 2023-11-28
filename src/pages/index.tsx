@@ -2,17 +2,12 @@ import ContentApi from "@/api/content/page";
 import ContentPageProvider from "@/components/Content/ContentPageProvider";
 import SkeletonFiller from "@/components/Content/SkeletonFiller";
 import { ContentPage } from "@/types/content/contentPage";
-import { useEffect, useState } from "react";
 
-const Home = () => {
-  const [content, setContent] = useState<ContentPage>();
+interface Props {
+  content: ContentPage;
+}
 
-  useEffect(() => {
-    (async () => {
-      setContent(await ContentApi.getStartPage());
-    })();
-  }, []);
-
+const Home = ({ content }: Props) => {
   return (
     <>
       {content ? (
@@ -23,5 +18,16 @@ const Home = () => {
     </>
   );
 };
+
+export async function getStaticProps() {
+  const content = await ContentApi.getStartPage();
+
+  return {
+    props: {
+      content,
+    },
+    revalidate: 10,
+  };
+}
 
 export default Home;

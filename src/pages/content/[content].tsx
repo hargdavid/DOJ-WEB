@@ -6,35 +6,64 @@ import ContentPageProvider from "@/components/Content/ContentPageProvider";
 import { useRouter } from "next/router";
 import SkeletonFiller from "@/components/Content/SkeletonFiller";
 
-const ContentPage = () => {
-  const [contentPage, setContentPage] = useState<ContentPage>(); //TODO change this
-  const pathname = usePathname();
-  const router = useRouter();
+interface Props {
+  content: ContentPage;
+}
 
-  useEffect(() => {
-    (async () => {
-      if (pathname) {
-        try {
-          setContentPage(
-            await ContentApi.getContentPage(pathname?.replace("/content/", ""))
-          );
-        } catch (error) {
-          router.push("/404");
-          return null;
-        }
-      }
-    })();
-  }, [pathname, router]);
+interface PathProps {
+  params: { content: string };
+}
 
+const ContentPage = ({ content }: Props) => {
   return (
     <>
-      {contentPage ? (
-        <ContentPageProvider contentPage={contentPage} />
+      {content ? (
+        <ContentPageProvider contentPage={content} />
       ) : (
         <SkeletonFiller />
       )}
     </>
   );
 };
+
+export async function getStaticProps({ params }: PathProps) {
+  const content = await ContentApi.getContentPage(params.content);
+
+  return {
+    props: {
+      content,
+    },
+    revalidate: 10,
+  };
+}
+
+export async function getStaticPaths() {
+  // Call an external API endpoint to get posts
+  const posts = [
+    {
+      id: "when-where",
+    },
+    {
+      id: "event-details",
+    },
+    {
+      id: "dresscode",
+    },
+    {
+      id: "faq",
+    },
+    {
+      id: "images",
+    },
+  ];
+  // Get the paths we want to pre-render based on posts
+  const paths = posts.map((post) => ({
+    params: { content: post.id },
+  }));
+
+  // We'll pre-render only these paths at build time.
+  // { fallback: false } means other routes should 404.
+  return { paths, fallback: false };
+}
 
 export default ContentPage;

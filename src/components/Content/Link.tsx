@@ -2,7 +2,7 @@ import { Link } from "@/types/content/contentPage";
 import NextLink from "next/link";
 
 type Props = {
-  link: Link;
+  link: Link | null;
   children: React.ReactNode;
   className?: string;
 };
@@ -10,7 +10,7 @@ type Props = {
 const Link = ({ link, children, className = "" }: Props) => {
   return (
     <>
-      {link.aTarget ? (
+      {link?.aTarget ? (
         <a
           className={`hover:underline text-orange ${className}`}
           href={link.href}
@@ -21,7 +21,7 @@ const Link = ({ link, children, className = "" }: Props) => {
       ) : (
         <NextLink
           className={`hover:underline text-orange ${className}`}
-          href={link.href}
+          href={link?.href ?? ""}
         >
           {children}
         </NextLink>

@@ -4,7 +4,7 @@ export type ContentPage = {
   content: ContentBlock[];
   path: string;
   hero: Hero;
-  images?: ImageWithLink[];
+  images: ImageWithLink[] | null;
 };
 
 export type ContentPageDTO = {
@@ -18,9 +18,9 @@ export type Hero = {
   subtitle: string;
   title: string;
   heroImage: Image;
-  button?: LinkButton;
-  video?: Video;
-  mobileImage?: Image;
+  button: LinkButton | null;
+  video: Video | null;
+  mobileImage: Image | null;
 };
 
 export type HeroDTO = {
@@ -66,7 +66,7 @@ export type TextBlock = {
   type: TextTypes;
   text: string;
   marks: MarkTypes | undefined;
-  link?: Link;
+  link: Link | null;
 };
 
 export type TextBlockWithStyleOrLink = {
@@ -125,9 +125,9 @@ export type ImageDto = {
 };
 
 export type ImageWithLink = Image & {
-  link?: Link;
+  link?: Link | null;
   title?: string;
-  description?: string;
+  description: string | null;
 };
 
 export type ImageWithLinkDto = {
@@ -158,8 +158,8 @@ export type RegisterPage = ContentPage & {
 };
 
 export type SuccessContent = {
-  images?: ImageWithLink[];
-  content?: ContentBlock[];
+  images: ImageWithLink[] | null;
+  content: ContentBlock[] | null;
 };
 
 export type RegisterPageDto = ContentPageDTO & {
