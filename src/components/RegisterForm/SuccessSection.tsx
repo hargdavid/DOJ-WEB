@@ -1,4 +1,4 @@
-import Section from "../Section";
+import Section from "../Section/Section";
 import Heading2 from "../Content/Heading2";
 import Button from "../Button";
 import { useRegisterFormState } from "@/hooks/RegisterProvider";

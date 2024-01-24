@@ -9,17 +9,18 @@ export const mapRegisterPage = (
   registerPageDto: RegisterPageDto
 ): RegisterPage => {
   return {
-    content: registerPageDto.content.map(mapContentBlock),
-    path: registerPageDto.path,
+    content: mapContentBlock(registerPageDto.content),
+    path: registerPageDto.path ?? null,
     images: registerPageDto.images
       ? registerPageDto.images.map(mapImageWithLinkBlock)
-      : undefined,
+      : null,
     hero: mapHero(registerPageDto.hero),
     success: {
       images:
-        registerPageDto.success.images?.map(mapImageWithLinkBlock) ?? undefined,
-      content:
-        registerPageDto.success.content?.map(mapContentBlock) ?? undefined,
+        registerPageDto.success.images?.map(mapImageWithLinkBlock) ?? null,
+      content: registerPageDto.success.content
+        ? mapContentBlock(registerPageDto.success.content)
+        : null,
     },
   };
 };

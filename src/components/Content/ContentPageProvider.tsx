@@ -2,7 +2,7 @@ import { ContentPage } from "@/types/content/contentPage";
 import Hero from "../Hero";
 import ImageList from "./ImageList";
 import ContentProvider from "./ContentProvider";
-import Section from "../Section";
+import Section from "../Section/Section";
 
 type Props = { contentPage: ContentPage };
 

@@ -20,15 +20,39 @@
 @layer base {
   body {
     font-family: "Minerva-bold";
-    @apply bg-lime text-black;
+    @apply bg-lime text-green;
   }
-  h1 {
+  h1,
+  h2 {
     font-family: "Minerva-italic";
+  }
+  p {
+    @apply max-md:px-4;
   }
   .bold {
     font-family: "Minerva";
   }
   .italic {
     font-family: "Minerva-italic";
+  }
+}
+
+.loader {
+  bottom: 50%;
+  width: 70px;
+  height: 70px;
+  border: 5px solid #fff;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+  @apply border-b-green;
+}
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }

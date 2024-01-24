@@ -13,19 +13,25 @@ const SocialMedia = ({ social }: Props) => {
   return (
     <ul className="flex  gap-4">
       <li>
-        <a href={instagram}>
-          <Instagram />
-        </a>
+        {instagram && (
+          <a href={instagram}>
+            <Instagram />
+          </a>
+        )}
       </li>
       <li>
-        <a href={facebook}>
-          <Facebook />
-        </a>
+        {facebook && (
+          <a href={facebook}>
+            <Facebook />
+          </a>
+        )}
       </li>
       <li>
-        <a href={`mailto:${mail}`}>
-          <EnvelopeIcon className="text-green" height={24} width={24} />
-        </a>
+        {mail && (
+          <a href={`mailto:${mail}`}>
+            <EnvelopeIcon className="text-green" height={24} width={24} />
+          </a>
+        )}
       </li>
     </ul>
   );

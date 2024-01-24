@@ -9,7 +9,10 @@ export class RegisterApi {
   public static postRegister = async (form: RegisterForm) => {
     try {
       const formDto = this.mapFormToDto(form);
-      await axios.post(`${backendUrl}/register`, formDto);
+      await axios.post(
+        `https://molten-catalyst-398914.ew.r.appspot.com/register`,
+        formDto
+      );
     } catch (error) {
       throw error;
     }

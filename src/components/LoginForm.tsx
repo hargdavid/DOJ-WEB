@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Button from "./Button";
 import TextInput from "./RegisterForm/Input/TextInput";
-import Section from "./Section";
+import Section from "./Section/Section";
 import { useGlobalState } from "@/hooks/GlobalProvider";
 import { useRouter } from "next/router";
 

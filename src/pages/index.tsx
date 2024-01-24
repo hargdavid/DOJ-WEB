@@ -1,22 +1,33 @@
 import ContentApi from "@/api/content/page";
 import ContentPageProvider from "@/components/Content/ContentPageProvider";
-import { useGlobalState } from "@/hooks/GlobalProvider";
+import SkeletonFiller from "@/components/Content/SkeletonFiller";
 import { ContentPage } from "@/types/content/contentPage";
-import { useEffect, useState } from "react";
 
-const Home = () => {
-  const [content, setContent] = useState<ContentPage>();
-  const { isLoggedIn } = useGlobalState();
+interface Props {
+  content: ContentPage;
+}
 
-  console.log("isLoggedIncontet", isLoggedIn);
-
-  useEffect(() => {
-    (async () => {
-      setContent(await ContentApi.getStartPage());
-    })();
-  }, []);
-
-  return <>{content && <ContentPageProvider contentPage={content} />}</>;
+const Home = ({ content }: Props) => {
+  return (
+    <>
+      {content ? (
+        <ContentPageProvider contentPage={content} />
+      ) : (
+        <SkeletonFiller />
+      )}
+    </>
+  );
 };
+
+export async function getStaticProps() {
+  const content = await ContentApi.getStartPage();
+
+  return {
+    props: {
+      content,
+    },
+    revalidate: 10,
+  };
+}
 
 export default Home;

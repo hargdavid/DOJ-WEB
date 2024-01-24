@@ -4,7 +4,7 @@ export type ContentPage = {
   content: ContentBlock[];
   path: string;
   hero: Hero;
-  images?: ImageWithLink[];
+  images: ImageWithLink[] | null;
 };
 
 export type ContentPageDTO = {
@@ -18,8 +18,9 @@ export type Hero = {
   subtitle: string;
   title: string;
   heroImage: Image;
-  button?: LinkButton;
-  video?: Video;
+  button: LinkButton | null;
+  video: Video | null;
+  mobileImage: Image | null;
 };
 
 export type HeroDTO = {
@@ -28,9 +29,10 @@ export type HeroDTO = {
   heroImage: ImageDto;
   video?: ImageDto;
   button?: LinkButtonDto;
+  mobileImage?: ImageDto;
 };
 
-export type ContentBlock = TextBlock | Image;
+export type ContentBlock = TextBlock | Image | TextBlockWithStyleOrLink;
 
 export type ContentBlockDTO = TextBlockDto | ImageDto;
 
@@ -41,6 +43,16 @@ export enum TextTypes {
   Text = "Text",
   Quote = "Quote",
   Bullet = "Bullet",
+  TextList = "TextList",
+}
+
+export enum TagTypes {
+  H1 = "h1",
+  H2 = "h2",
+  H3 = "h3",
+  Text = "p",
+  Quote = "q",
+  Bullet = "li",
 }
 
 export enum MarkTypes {
@@ -54,7 +66,13 @@ export type TextBlock = {
   type: TextTypes;
   text: string;
   marks: MarkTypes | undefined;
-  link?: Link;
+  link: Link | null;
+};
+
+export type TextBlockWithStyleOrLink = {
+  type: TextTypes.TextList;
+  text: TextBlock[];
+  style: TagTypes;
 };
 
 export type Link = {
@@ -107,9 +125,9 @@ export type ImageDto = {
 };
 
 export type ImageWithLink = Image & {
-  link?: Link;
+  link?: Link | null;
   title?: string;
-  description?: string;
+  description: string | null;
 };
 
 export type ImageWithLinkDto = {
@@ -140,8 +158,8 @@ export type RegisterPage = ContentPage & {
 };
 
 export type SuccessContent = {
-  images?: ImageWithLink[];
-  content?: ContentBlock[];
+  images: ImageWithLink[] | null;
+  content: ContentBlock[] | null;
 };
 
 export type RegisterPageDto = ContentPageDTO & {

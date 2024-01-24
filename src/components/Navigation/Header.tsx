@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import MobileMenu from "../MobileMenu";
+import MobileMenu from "../MobileMenu/MobileMenu";
 import Links from "./Links";
 import { NavigationItem } from "@/types/content/navigation";
 import { Image as ImageType } from "@/types/content/contentPage";
@@ -35,7 +35,7 @@ const Header = ({ isDesktop, isTop, navigation, logo }: Props) => {
           <Links navigation={navigation} isTop={isTop} />
         </nav>
       ) : (
-        <MobileMenu>
+        <MobileMenu isTop={isTop}>
           <Links navigation={navigation} isTop={false} />
         </MobileMenu>
       )}

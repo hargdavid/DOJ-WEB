@@ -10,10 +10,10 @@ type Props = {
 
 const Footer = ({ navigation, social }: Props) => {
   return (
-    <footer className="w-full px-8 py-8 bg-brown">
+    <footer className="w-full px-8 py-8 bg-light-brown">
       <div className="flex justify-between gap-6">
         <nav className="flex flex-col items-start gap-4 w-max">
-          <Links navigation={navigation} />
+          <Links navigation={navigation} isFooter />
         </nav>
 
         {social && <SocialMedia social={social} />}

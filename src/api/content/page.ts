@@ -32,7 +32,6 @@ export default class ContentApi {
     try {
       const query = encodeURIComponent("*[_type == 'startPage']");
       const response = await axios.get(this.contentUrl + query);
-
       const startPage: ContentPageDTO = response.data.result[0];
 
       if (typeof startPage === "undefined") {
