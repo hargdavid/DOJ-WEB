@@ -20,7 +20,9 @@ export class RegisterApi {
 
   public static getRegistered = async (): Promise<RegisterFormDto[]> => {
     try {
-      const response = await axios.get(`${backendUrl}/register`);
+      const response = await axios.get(
+        `https://molten-catalyst-398914.ew.r.appspot.com/register`
+      );
       return response.data;
     } catch (error) {
       throw error;

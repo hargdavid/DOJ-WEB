@@ -9,7 +9,10 @@ const backendUrl =
 export class LoginApi {
   public static postLogin = async (form: LoginFormType) => {
     try {
-      await axios.post(`${backendUrl}/auth/login`, form);
+      await axios.post(
+        "https://molten-catalyst-398914.ew.r.appspot.com/auth/login",
+        form
+      );
     } catch (error) {
       throw error;
     }

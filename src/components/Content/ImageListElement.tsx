@@ -26,14 +26,14 @@ const ImageListElement = ({ image }: Props) => {
 
   return (
     <li
-      className={`flex-auto overflow-hidden relative md:w-[25%] ease-in-out duration-100 h-[400px] md:h-[300px] ${
+      className={`flex-auto overflow-hidden relative ${
         typeof image.link !== "undefined" ? "md:hover:scale-[1.01]}" : ""
       }`}
     >
       {typeof image.link !== "undefined" ? (
-        <Link link={image.link}>
+        <a href={image.url} target="_blank">
           <ImageListBlock />
-        </Link>
+        </a>
       ) : (
         <ImageListBlock />
       )}

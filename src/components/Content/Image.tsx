@@ -7,13 +7,7 @@ type Props = {
 
 const CustomImage = ({ url, alt }: Props) => {
   return (
-    <Image
-      src={url}
-      alt={alt}
-      className="w-auto min-h-full relative"
-      width={500}
-      height={300}
-    />
+    <Image src={url} alt={alt} className="relative" width={500} height={300} />
   );
 };
 
